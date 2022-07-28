@@ -76,9 +76,20 @@ ${email ? `Email Address: ${email}` : ''}
 }
 
 function generateMarkdown(data) {
-  return `# ${data.title}
-
-`;
+  return `# ${data.title} 
+  
+  ${[renderLicenseBadge(data.license) + '\n',
+    renderTableOfContents(data),
+    renderDescriptionSection(data.description),
+    renderInstallationSection(data.installation),
+    renderUsageSection(data.usage),
+    renderLicenseSection(data.license),
+    renderContributingSection(data.contributing),
+    renderTestsSection(data.tests),
+    renderQuestionsSection(data.github, data.email)]
+      .filter(x => x)
+      .join('\n')}
+      `
 }
 
 module.exports = generateMarkdown;
