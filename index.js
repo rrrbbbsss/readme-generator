@@ -100,5 +100,16 @@ function writeToFile(fileName, data) {
         .then(() => fsPromises.writeFile(fileName, data));
 }
 
+function init() {
+    const readmePath = './dist/README.md';
+    inquirer.prompt(questions)
+        // generate markdown from answers
+        .then(answers => generateMarkdown(answers))
+        // write the markdown to a file
+        .then(markdown => writeToFile('./dist/README.md', markdown))
+        // log any error caught
+        .catch(err => console.log(err));
+}
+
 // Function call to initialize app
 init();
