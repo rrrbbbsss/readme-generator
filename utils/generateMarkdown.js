@@ -13,16 +13,68 @@ function renderLicenseSection(license) {
   This project is licensed under the ${renderLicenseLink(license)} license.` : '';
 }
 
+function renderTableOfContents(data) {
+  // title is always included so destruct that out
+  const { title, ...props } = data;
+  // check to see if there were any answers and render the table of contents, otherwise reuturn nothing
+  return Object.values(props).reduce((acc, x) => x || acc, false) ? `## Table of Contents
 
-// TODO: Create a function that returns the license link
-// If there is no license, return an empty string
-function renderLicenseLink(license) {}
+${[data.description ? "1. [Description](#Description)" : '',
+    data.installation ? "1. [Installation](#Installation)" : '',
+    data.usage ? "1. [Usage](#Usage)" : '',
+    data.license ? "1. [License](#License)" : '',
+    data.contributing ? "1. [Contributing](#Contributing)" : '',
+    data.tests ? "1. [Tests](#Tests)" : '',
+    data.github || data.email ? "1. [Questions](#Questions)" : '']
+      .filter(x => x)
+      .join('\n')}
+      ` : "";
+}
 
-// TODO: Create a function that returns the license section of README
-// If there is no license, return an empty string
-function renderLicenseSection(license) {}
+function renderDescriptionSection(data) {
+  return data ? `## Description
 
-// TODO: Create a function to generate markdown for README
+${data}
+` : '';
+}
+
+function renderInstallationSection(data) {
+  return data ? `## Installation
+
+${data}
+` : '';
+}
+
+function renderUsageSection(data) {
+  return data ? `## Usage 
+
+${data}
+` : '';
+}
+
+function renderContributingSection(data) {
+  return data ? `## Contributing
+
+${data}
+` : '';
+}
+
+function renderTestsSection(data) {
+  return data ? `## Tests
+
+${data}
+` : '';
+}
+
+function renderQuestionsSection(github, email) {
+  return github || email ? `## Questions
+
+${github ? `Github Account: [${github}](https://github.com/${github})` : ''}
+
+${email ? `Email Address: ${email}` : ''}
+  ` : '';
+}
+
 function generateMarkdown(data) {
   return `# ${data.title}
 
