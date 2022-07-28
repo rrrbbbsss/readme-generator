@@ -91,8 +91,14 @@ const questions = [
     }
 ];
 
-// TODO: Create a function to initialize app
-function init() {}
+function writeToFile(fileName, data) {
+    const directory = path.dirname(fileName);
+    return fsPromises.access(directory, fsPromises.R_OK | fsPromises.W_OK)
+        // if the folder does not exist, create it
+        .catch(err => fsPromises.mkdir(directory))
+        // then write the file
+        .then(() => fsPromises.writeFile(fileName, data));
+}
 
 // Function call to initialize app
 init();
